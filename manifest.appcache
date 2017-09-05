@@ -1,0 +1,22 @@
+CACHE MANIFEST
+# 2014-12-28 v.1
+index.html
+css/hher.css
+js/hherApp.js
+js/hherCtrl.js
+js/utility.js
+images/left.png
+images/right.png
+images/delete.png
+images/save.jpg
+images/close.png
+images/edit.png
+images/plus.png
+images/minus.png
+http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js
+
+NETWORK:
+
+
+FALLBACK:
+index.html

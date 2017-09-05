@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+</head>
+
+<body>
+<div ng-app="regApp" ng-controller="RegistrationCtrl" data-ng-init="GetEventDetail()">
+     <h2>Registration for {{data.EventName}}</h2>
+ <span class="btn" id="btnSave" ng-click="PostRegistration()">Save </span>
+
+</div>
+<script>
+var app = angular.module('regApp', []);
+
+app.controller('RegistrationCtrl', function ($scope, $http) {
+    $scope.PostRegistration = function () {
+        alert('click '); // <--- fires twice
+        /// some code here -- 
+    };
+});
+</script>
+
+</body>
+
+</html>

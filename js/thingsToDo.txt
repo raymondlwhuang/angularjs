@@ -1,0 +1,6 @@
+clear localstorage when new item added
+summary not adding correctly
+display account summary
+make it allow add new item
+hard to pick december on summary
+display been cut off

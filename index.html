@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html manifest="manifest.appcache">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time Sheet</title>
+<link rel="stylesheet" href="css/timesheet.css">
+<script src="js/utility.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script src="js/timesheetApp.js"></script>
+<script src="js/timesheetCtrl.js"></script>
+</head>
+<body>
+
+<div class="main" ng-app="myApp" ng-controller="timesheetCtrl">
+<div class="date">
+<select ng-model="year" ng-options="x for x in yearRange" ng-change="dateChanged()"></select>
+<select ng-model="month" ng-options="x for x in monthlist" ng-change="dateChanged()"></select>
+<select ng-model="day" ng-change="dateChanged()">
+<option value=1>01</option>
+<option value=2>02</option>
+<option value=3>03</option>
+<option value=4>04</option>
+<option value=5>05</option>
+<option value=6>06</option>
+<option value=7>07</option>
+<option value=8>08</option>
+<option value=9>09</option>
+<option value=10>10</option>
+<option value=11>11</option>
+<option value=12>12</option>
+<option value=13>13</option>
+<option value=14>14</option>
+<option value=15>15</option>
+<option value=16>16</option>
+<option value=17>17</option>
+<option value=18>18</option>
+<option value=19>19</option>
+<option value=20>20</option>
+<option value=21>21</option>
+<option value=22>22</option>
+<option value=23>23</option>
+<option value=24>24</option>
+<option value=25>25</option>
+<option value=26>26</option>
+<option value=27>27</option>
+<option value=28>28</option>
+<option value=29>29</option>
+<option value=30>30</option>
+<option value=31>31</option>
+</select>
+<select ng-model="weekday" ng-options="x for x in weekdaylist" disabled></select>
+</div>
+<div class="time">
+<label>时 间:</label>
+<select ng-model="start" ng-change="getHours()">
+<option value=0>0</option>
+<option value=1>1</option>
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+<option value=7>7</option>
+<option value=8>8</option>
+<option value=9>9</option>
+<option value=10>10</option>
+<option value=11>11</option>
+<option value=12>12</option>
+</select>
+<select ng-model="startMin" ng-change="getHours()">
+<option value="00">00</option>
+<option value="15">15</option>
+<option value="30">30</option>
+<option value="45">45</option>
+</select>
+<select class="amPm" ng-model="am" ng-change="getHours()">
+<option value=0>AM</option>
+<option value=12>PM</option>
+</select>
+<label>到:</label>
+<select ng-model="end" ng-change="getHours()">
+<option value=1>1</option>
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+<option value=7>7</option>
+<option value=8>8</option>
+<option value=9>9</option>
+<option value=10>10</option>
+<option value=11>11</option>
+</select>
+<select ng-model="endMin" ng-change="getHours()">
+<option value="00">00</option>
+<option value="15">15</option>
+<option value="30">30</option>
+<option value="45">45</option>
+</select>
+<select class="amPm" ng-model="pm" ng-change="getHours()">
+<option value=0>AM</option>
+<option value=12>PM</option>
+</select>
+</div>
+<div  class="filterRange">
+<button ng-click="done()" style="background-image:url('images/save.jpg');background-repeat: no-repeat;" title="Save"></button>
+<button ng-click="holiday()" title="Holiday"><img src="images/save.jpg" />假日</button>
+<button ng-click="newPage(0)" title="previous"><img src="images/left.png" /></button>
+<button ng-click="newPage(1)" title="previous"><img src="images/right.png" /></button>
+<div>
+显示从
+<select ng-model="filterYear" ng-options="x for x in yearRange" ng-change="filterChanged()"></select>
+<select ng-model="filterMonth" ng-options="x for x in monthlist" ng-change="filterChanged()"></select>
+<select ng-model="filterDay" ng-change="filterChanged()">
+<option value=1>1</option>
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+<option value=7>7</option>
+<option value=8>8</option>
+<option value=9>9</option>
+<option value=10>10</option>
+<option value=11>11</option>
+<option value=12>12</option>
+<option value=13>13</option>
+<option value=14>14</option>
+<option value=15>15</option>
+<option value=16>16</option>
+<option value=17>17</option>
+<option value=18>18</option>
+<option value=19>19</option>
+<option value=20>20</option>
+<option value=21>21</option>
+<option value=22>22</option>
+<option value=23>23</option>
+<option value=24>24</option>
+<option value=25>25</option>
+<option value=26>26</option>
+<option value=27>27</option>
+<option value=28>28</option>
+<option value=29>29</option>
+<option value=30>30</option>
+<option value=31>31</option>
+</select><br/>
+开始到
+<select ng-model="filterEndYear" ng-options="x for x in yearRange" ng-change="endDateChanged()"></select>
+<select ng-model="filterEndMonth" ng-options="x for x in monthlist" ng-change="endDateChanged()"></select>
+<select ng-model="filterEndDay"  ng-change="endDateChanged()">
+<option value=1>1</option>
+<option value=2>2</option>
+<option value=3>3</option>
+<option value=4>4</option>
+<option value=5>5</option>
+<option value=6>6</option>
+<option value=7>7</option>
+<option value=8>8</option>
+<option value=9>9</option>
+<option value=10>10</option>
+<option value=11>11</option>
+<option value=12>12</option>
+<option value=13>13</option>
+<option value=14>14</option>
+<option value=15>15</option>
+<option value=16>16</option>
+<option value=17>17</option>
+<option value=18>18</option>
+<option value=19>19</option>
+<option value=20>20</option>
+<option value=21>21</option>
+<option value=22>22</option>
+<option value=23>23</option>
+<option value=24>24</option>
+<option value=25>25</option>
+<option value=26>26</option>
+<option value=27>27</option>
+<option value=28>28</option>
+<option value=29>29</option>
+<option value=30>30</option>
+<option value=31>31</option>
+</select>
+</div>
+</div>
+<table>
+<caption><input type="text" value="I LING TANG" /></caption>
+<tr>
+<th></th>
+<th>DATE</th>
+<th>FROM</th>
+<th>TO</th>
+<th>HOURS</th>
+</tr>
+<tr ng-repeat="x in records  | orderBy:'Date' | filter:byRange('Date', filterStartDate, filterEndDate)">
+<td ng-click="remove(x.Date)"><img src="images/delete.png" /></td>
+<td>{{x.Weekday}}, {{x.Date|date:'MMMM,dd,yyyy'}}</td>
+<td>{{x.Start}}</td>
+<td>{{x.End}}</td>
+<td>{{x.Hours}}</td>
+</tr>
+<tr>
+<td></td>
+<td colspan="3">TOTAL HOURS: </td>
+<td>{{totalHours}}</td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>
